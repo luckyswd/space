@@ -52,6 +52,25 @@ class UserController extends AbstractController
         return $this->json($createUserHandler());
     }
 
+    #[Route('/user/login', methods: ['POST'])]
+    #[OA\Tag(name: "User")]
+    #[OA\Response(
+        response: 200,
+        description: 'Check login',
+    )]
+    #[OA\RequestBody(
+        content: [new OA\MediaType(mediaType: "application/json",
+            schema: new OA\Schema(
+                properties: [
+                    new OA\Property(property: "username", type: "string"),
+                    new OA\Property(property: "password", type: "string"),
+                ]
+            )
+        )],
+    )]
+    public function loginCheck()
+    {}
+
     #[Route('/user/{id}', methods: ['GET'])]
     #[OA\Tag(name: "User")]
     #[OA\Response(
