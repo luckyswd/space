@@ -1,0 +1,101 @@
+ahoyapi: v2
+commands:
+  ps:
+    cmd: docker-compose ps "$@"
+    usage: List the running docker-compose containers.
+
+  up:
+    cmd: "docker-compose up --build -d"
+    usage: Create and run docker services.
+
+  down:
+    cmd: "docker-compose down $@"
+    usage: Stop the docker-compose containers.
+
+  start:
+    cmd: docker-compose start "$@"
+    usage: Start the docker-com stpose containers.
+
+  stop:
+    cmd: docker-compose stop "$@"
+    usage: Stop the docker-compose containers.
+
+  restart:
+    cmd: docker-compose restart "$@"
+    usage: Restart the docker-compose containers.
+
+  console:
+    cmd: 'docker exec -it space-php bin/console $@'
+    usage: Run console commands without having to cd to the project root first.
+
+  behat:
+    cmd: docker-compose run cli bash -c "cd docroot/test && composer install --prefer-source --no-interaction && bin/behat -p docker $@"
+    usage: Run the behat tests within the container.
+
+  behat-init:
+    cmd: 'docker-compose run cli bash -c "cd docroot/test && composer install --prefer-source --no-interaction"'
+    usage: Use composer to install behat dependencies.
+
+  test:
+    cmd: 'docker exec -it space-php bin/phpunit'
+    usage: Use composer to install behat dependencies.
+
+  cc:
+    cmd: 'docker exec -it space-php bin/console cache:clear'
+    usage: Clear cache for a specified environment.
+
+  cct:
+    cmd: 'docker exec -it space-php bin/console cache:pool:clear memcached.cache.tokens'
+    usage: Clear cache for a specified environment.
+
+  schema:update:
+    cmd: 'docker exec space-php bin/console doctrine:schema:drop --force && docker exec space-php bin/console doctrine:schema:create'
+    usage: Run console commands doctrine:schema:drop --force && doctrine:schema:create
+
+  migrate:
+    cmd: 'ahoy cc && docker exec -it space-php bin/console doctrine:migrations:migrate --no-interaction'
+    usage: Run console commands doctrine:migrations:migrate.
+
+  force:
+    cmd: 'docker exec space-php bin/console doctrine:schema:update --dump-sql --force'
+    usage: Run console commands doctrine:schema:update --dump-sql
+
+  fm:
+    cmd: 'ahoy cc && docker exec space-php bin/console doctrine:schema:update --dump-sql --force && docker exec -it space-php bin/console doctrine:migrations:migrate --no-interaction'
+    usage: Run console commands doctrine:schema:update --dump-sql and run console commands doctrine:migrations:migrate
+
+  codesniffer:
+    cmd: './vendor/bin/ecs check src --fix $@'
+    usage: Run code analysis
+
+  phpunit:
+    cmd: 'docker exec space-php bin/phpunit $@'
+    usage: Run phpunit commands
+
+  fixture:
+    cmd: 'docker exec space-php bin/console doctrine:fixtures:load'
+    usage: Load fixtures
+
+  composer:
+    cmd: 'docker exec space-php composer $@'
+    usage: Run composer commands without having to cd to the project root first.
+
+  db:backup:
+    cmd: 'docker exec space_percona /usr/bin/mysqldump -u spaceuser --password=spacepass space > backup.sql'
+    usage: Backup
+
+  db:drop:
+    cmd: 'docker exec -it space-php bin/console --env=dev doctrine:schema:drop --full-database --force'
+    usage: Drop all tables
+
+  db:rebuild:
+    usage: Drop all tables, clear cache and load the data again
+    cmd: |
+      echo "Drop all tables"
+      ahoy db:drop
+      echo "Update DB schema"
+      ahoy force
+      echo "Migration data from OLD DB"
+      php Migration.php
+      echo "Load migrations"
+      ahoy migrate
