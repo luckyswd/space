@@ -1,9 +1,8 @@
 # space
 
-Start
-ahoy up
-ahoy composer i
-ahoy console lexik:jwt:generate-keypair
+<code>ahoy up</code></br>
+<code>ahoy composer i</code></br>
+<code>ahoy console lexik:jwt:generate-keypair</code></br>
 
 Error in lexik JWT.
 Change LooseValidAt to ValidAt
