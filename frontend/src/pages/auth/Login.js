@@ -1,14 +1,37 @@
 import {Button, Form, Input, Checkbox, Row, Col} from "antd";
+import {auth} from "../../api/auth";
+import {useEffect, useRef, useState} from "react";
+import {useNavigate} from "react-router-dom";
+import Title from "antd/es/typography/Title";
+
 
 const Login = () => {
+  const [credentials, setCredentials] = useState({
+    username: '',
+    password: '',
+  })
+  const navigate = useNavigate();
+  const emailRef = useRef();
+
+  const handleInputForm = (name, value) => {
+    setCredentials({...credentials, [name]: value})
+  }
+
+  useEffect(() => {
+    emailRef.current?.focus()
+  }, [])
+
   const onFinish = () => {
-    console.log('login')
+    auth.login(credentials).then(res => {
+      navigate('/admin')
+    })
   }
 
   return (
     <>
       <Row justify="center" align="middle" style={{ height: '100%' }}>
         <Col>
+          <Title style={{textAlign: 'center', marginBottom: '30px' }}>Войти</Title>
           <Form
             name="basic"
             labelCol={{
@@ -37,11 +60,12 @@ const Login = () => {
                 },
               ]}
             >
-              <Input/>
+              <Input ref={emailRef} onChange={(e) => handleInputForm('username', e.target.value)} value={credentials.username}/>
+
             </Form.Item>
 
             <Form.Item
-              label="Password"
+              label="Пароль"
               name="password"
               rules={[
                 {
@@ -50,20 +74,7 @@ const Login = () => {
                 },
               ]}
             >
-              <Input.Password/>
-            </Form.Item>
-
-            <Form.Item
-              name="remember"
-              valuePropName="checked"
-              wrapperCol={{
-                sm: {
-                  offset: 8,
-                  span: 16,
-                }
-              }}
-            >
-              <Checkbox>Remember me</Checkbox>
+              <Input.Password onChange={(e) => handleInputForm('password', e.target.value)} value={credentials.password} />
             </Form.Item>
 
             <Form.Item

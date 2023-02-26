@@ -1,64 +1,100 @@
-import './App.css';
+import React, {useCallback, useEffect} from 'react';
+import {Layout, theme, Avatar, Col, Row, Dropdown, Menu} from 'antd';
+import {UserOutlined, LogoutOutlined, ProfileOutlined} from '@ant-design/icons';
+import {useDispatch} from "react-redux";
+import {fetchClients} from "./store/clients/thunks";
+import Sidebar from "./modules/sidebar/Sidebar";
+import {Link, useNavigate} from "react-router-dom";
+import {auth} from "./api/auth";
 
-import {
-  Link,
-  useSearchParams,
-  useLoaderData,
-  json,
-  defer,
-  Await
-} from "react-router-dom";
+const {Header, Content, Footer} = Layout;
+const App = () => {
+  const dispatch = useDispatch()
+  const navigate = useNavigate();
 
-import {Suspense} from 'react'
-import {Spin} from 'antd'
+  useEffect(() => {
+    dispatch(fetchClients())
+  }, [])
 
-function getPackageLocation () {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      resolve('5000');
-    }, 1000);
+  const logout = useCallback(() => {
+    auth.logout()
+      .then(() => navigate('/'))
+
   })
 
-}
-
-export async function loader(data) {
-  const packageLocationPromise = getPackageLocation();
-
-  return defer({
-    packageLocation: packageLocationPromise,
-  });
-}
-
-function App() {
-  const data = useLoaderData();
-
-  console.log(data)
-
-
+  const {
+    token: {colorBgContainer},
+  } = theme.useToken();
   return (
-    <div className="App" style={{ height: '100%' }}>
-      <Link to="/login">qweqwe</Link>
-
-      Index page
-
-      <Suspense fallback={<Spin/>}>
-        <Await
-          resolve={data.packageLocation}
-          errorElement={
-            <p>Error loading package location!</p>
-          }
+    <Layout style={{height: '100%'}}>
+      <Sidebar/>
+      <Layout>
+        <Header
+          style={{
+            padding: '0 15px',
+            background: colorBgContainer,
+          }}
         >
-          {(packageLocation) => (
-            <p>
-              {packageLocation}
-              Your package is at
-              lat and long.
-            </p>
-          )}
-        </Await>
-      </Suspense>
-    </div>
+          <Row justify="end">
+
+            <Col span={'auto'}>
+
+              <Dropdown
+                placement="bottomLeft"
+                overlay={
+                  <Menu
+                    items={[
+                      {
+                        key: '1',
+                        label: 'Профиль',
+                        icon: <ProfileOutlined/>,
+                        disabled: true,
+                      },
+                      {
+                        key: '3',
+                        label: (<Link onClick={logout}>Выйти</Link>),
+                        icon: <LogoutOutlined/>,
+                        danger: true,
+
+                      },
+                    ]}
+                  />
+                }
+                trigger={['click']}
+              >
+                <Avatar size={45} icon={<UserOutlined style={{}}/>}/>
+              </Dropdown>
+            </Col>
+
+
+          </Row>
+        </Header>
+        <Content
+          style={{
+            margin: '24px 15px 0',
+          }}
+        >
+          <div
+            style={{
+              padding: 24,
+              minHeight: 360,
+              background: colorBgContainer,
+              height: '100%'
+            }}
+          >
+            content
+          </div>
+        </Content>
+        <Footer
+          style={{
+            textAlign: 'center',
+          }}
+        >
+          Space ©2023
+        </Footer>
+      </Layout>
+    </Layout>
   );
-}
+};
 
 export default App;

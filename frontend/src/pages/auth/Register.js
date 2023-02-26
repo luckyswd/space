@@ -7,14 +7,38 @@ import {
   Col
 } from "antd";
 
+import {auth} from "../../api/auth";
+import {useEffect, useState, useRef} from "react";
+import {useNavigate} from "react-router-dom";
+import Title from "antd/es/typography/Title";
+
 const Login = () => {
+  const [credentials, setCredentials] = useState({
+    email: '',
+    password: ''
+  });
+  const emailRef = useRef();
+  const navigate = useNavigate();
+
+  const handleInputForm = (name, value) => {
+    setCredentials({...credentials, [name]: value})
+  }
+
+  useEffect(() => {
+    emailRef.current?.focus()
+  }, [])
+
   const onFinish = () => {
-    console.log('register')
+    auth.register(credentials).then(r => {
+      navigate('/login')
+    })
   }
 
   return (
-    <Row justify="center" align="middle" style={{ height: '100%' }}>
+    <Row justify="center" align="middle" style={{height: '100%'}}>
       <Col>
+        <Title style={{textAlign: 'center', marginBottom: '30px'}}>Регистрация</Title>
+
         <Form
           name="basic"
           labelCol={{
@@ -43,11 +67,11 @@ const Login = () => {
               },
             ]}
           >
-            <Input/>
+            <Input ref={emailRef} onChange={(e) => handleInputForm('email', e.target.value)} value={credentials.email}/>
           </Form.Item>
 
           <Form.Item
-            label="Password"
+            label="Пароль"
             name="password"
             rules={[
               {
@@ -55,21 +79,9 @@ const Login = () => {
                 message: 'Пожалуйста, введите ваш пароль!',
               },
             ]}
-          >
-            <Input.Password/>
-          </Form.Item>
 
-          <Form.Item
-            name="remember"
-            valuePropName="checked"
-            wrapperCol={{
-              sm: {
-                offset: 8,
-                span: 16,
-              }
-            }}
           >
-            <Checkbox>Remember me</Checkbox>
+            <Input.Password onChange={(e) => handleInputForm('password', e.target.value)} value={credentials.password}/>
           </Form.Item>
 
           <Form.Item
