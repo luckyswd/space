@@ -8,13 +8,13 @@ export default () => {
     {
       icon: AppstoreOutlined,
       label: (
-        <Link to={'/records'}>Записи</Link>
+        <Link to={'/admin/records'}>Записи</Link>
       )
     },
     {
       icon: UserOutlined,
       label: (
-        <Link to={'/users'}>Клиенты</Link>
+        <Link to={'/admin/users'}>Клиенты</Link>
       )
     },
   ];
@@ -23,7 +23,6 @@ export default () => {
     <Menu
       theme="dark"
       mode="inline"
-      // defaultSelectedKeys={['1']}
       items={items.map(
         (item, index) => ({
           key: String(index + 1),

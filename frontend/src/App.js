@@ -4,7 +4,7 @@ import {UserOutlined, LogoutOutlined, ProfileOutlined} from '@ant-design/icons';
 import {useDispatch} from "react-redux";
 import {fetchClients} from "./store/clients/thunks";
 import Sidebar from "./modules/sidebar/Sidebar";
-import {Link, useNavigate} from "react-router-dom";
+import {Link, useNavigate, Outlet} from "react-router-dom";
 import {auth} from "./api/auth";
 
 const {Header, Content, Footer} = Layout;
@@ -20,7 +20,7 @@ const App = () => {
     auth.logout()
       .then(() => navigate('/'))
 
-  })
+  }, [])
 
   const {
     token: {colorBgContainer},
@@ -82,7 +82,7 @@ const App = () => {
               height: '100%'
             }}
           >
-            content
+            <Outlet/>
           </div>
         </Content>
         <Footer

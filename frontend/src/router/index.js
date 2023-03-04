@@ -8,6 +8,7 @@ import Error from "../pages/Error";
 import Register from "../pages/auth/Register";
 import ProtectedRoute from "./ProtectedRoute";
 import Home from "../pages/Home";
+import UserList from "../components/UserList";
 
 export default createBrowserRouter([
   {
@@ -19,6 +20,10 @@ export default createBrowserRouter([
     path: 'admin',
     element: (<ProtectedRoute><App/></ProtectedRoute>),
     children: [
+      {
+        path: 'users',
+        element: <UserList />
+      },
     ]
   },
   {

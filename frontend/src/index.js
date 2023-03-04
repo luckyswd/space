@@ -8,6 +8,7 @@ import {
 import 'antd/dist/reset.css';
 import './index.css';
 import index from "./router";
+import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -17,3 +18,5 @@ root.render(
     </Provider>
   </React.StrictMode>
 );
+
+serviceWorkerRegistration.register();

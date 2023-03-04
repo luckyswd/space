@@ -1,0 +1,16 @@
+version: "3"
+services:
+
+    frontend:
+        command: npm run start
+        build:
+            context: ./frontend
+            dockerfile: Dockerfile.dev
+        tty: true
+        stdin_open: true
+        volumes:
+            - ./frontend/src:/usr/src/app/src
+
+    mysql:
+        ports:
+            - 3307:3306
