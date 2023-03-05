@@ -59,9 +59,10 @@ class AppFixtures extends Fixture
         }
 
         for ($i = 0; $i < 40; $i++) {
+            $date = new DateTime();
             $record = new Record();
-            $record->setCreatedAt(new DateTime());
-            $record->setStartDate(new DateTime());
+            $record->setCreatedAt($date);
+            $record->setStartDate(DateTime::createFromFormat(Record::DATE_FORMAT, $date->format(Record::DATE_FORMAT)));
             $record->setPrice($i);
             $key = array_rand($clients);
             $record->setClient($clients[$key]);
