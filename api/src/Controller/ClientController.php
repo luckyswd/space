@@ -15,10 +15,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use OpenApi\Attributes as OA;
 
-#[Route('/api')]
+#[Route('/api/clients')]
 class ClientController extends AbstractController
 {
-    #[Route('/client/new', methods: ['POST'])]
+    #[Route('/new', methods: ['POST'])]
     #[OA\Tag(name: "Client")]
     #[OA\Response(
         response: 200,
@@ -45,7 +45,7 @@ class ClientController extends AbstractController
         return $this->json($createClientHandler());
     }
 
-    #[Route('/client/{id}', methods: ['GET'])]
+    #[Route('/{id}', methods: ['GET'])]
     #[OA\Tag(name: "Client")]
     #[OA\Response(
         response: 200,
@@ -59,7 +59,7 @@ class ClientController extends AbstractController
         return $jsonResponseFactory->createResponseJson($client);
     }
 
-    #[Route('/clients/space/{id}', methods: ['GET'])]
+    #[Route('/space/{id}', methods: ['GET'])]
     #[OA\Tag(name: "Client")]
     #[OA\Response(
         response: 200,
@@ -74,7 +74,7 @@ class ClientController extends AbstractController
         return $jsonResponseFactory->createResponseJson($clientRepository->findBy(['space' => $space]));
     }
 
-    #[Route('/client/remove/{id}', methods: ['DELETE'])]
+    #[Route('/{id}', methods: ['DELETE'])]
     #[OA\Tag(name: "Client")]
     #[OA\Response(
         response: 200,
@@ -88,7 +88,7 @@ class ClientController extends AbstractController
         return $this->json($removeClientHandler($client));
     }
 
-    #[Route('/client/update/{id}', methods: ['PUT'])]
+    #[Route('/{id}', methods: ['PUT'])]
     #[OA\Tag(name: "Client")]
     #[OA\Response(
         response: 200,

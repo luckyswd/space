@@ -8,6 +8,9 @@ use Symfony\Component\String\ByteString;
 class BaseTest
 {
     const CONTENT_TYPE = 'application/json';
+    const USER_URL = '/api/users';
+    const CLIENT_URL = '/api/clients';
+    const RECORDS_URL = '/api/records';
 
     public static function setBearer(
         KernelBrowser $client,
@@ -15,7 +18,7 @@ class BaseTest
     {
         $client->request(
             'GET',
-            '/api/user/login',
+            self::USER_URL . '/login',
             [],
             [],
             ['CONTENT_TYPE' => self::CONTENT_TYPE],

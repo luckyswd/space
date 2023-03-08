@@ -12,10 +12,10 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/api')]
+#[Route('/api/users')]
 class UserController extends AbstractController
 {
-    #[Route('/users', methods: ['GET'])]
+    #[Route('', methods: ['GET'])]
     #[OA\Tag(name: "User")]
     #[OA\Response(
         response: 200,
@@ -29,7 +29,7 @@ class UserController extends AbstractController
         return $jsonResponseFactory->createResponseJson($userRepository->findAll());
     }
 
-    #[Route('/user/new', methods: ['POST'])]
+    #[Route('/new', methods: ['POST'])]
     #[OA\Tag(name: "User")]
     #[OA\Response(
         response: 200,
@@ -52,7 +52,7 @@ class UserController extends AbstractController
         return $this->json($createUserHandler());
     }
 
-    #[Route('/user/login', methods: ['POST'])]
+    #[Route('/login', methods: ['POST'])]
     #[OA\Tag(name: "User")]
     #[OA\Response(
         response: 200,
@@ -71,7 +71,7 @@ class UserController extends AbstractController
     public function loginCheck()
     {}
 
-    #[Route('/user/{id}', methods: ['GET'])]
+    #[Route('/{id}', methods: ['GET'])]
     #[OA\Tag(name: "User")]
     #[OA\Response(
         response: 200,

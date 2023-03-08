@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class UserTest extends WebTestCase
 {
+    const URL = '/api/users';
     private KernelBrowser $client;
 
     public function setUp(): void
@@ -20,7 +21,7 @@ class UserTest extends WebTestCase
     {
         $this->client->request(
             'GET',
-            "/api/users",
+            self::URL,
             [],
             [],
             ['CONTENT_TYPE' => BaseTest::CONTENT_TYPE],
@@ -33,7 +34,7 @@ class UserTest extends WebTestCase
     {
         $this->client->request(
             'POST',
-            '/api/user/new',
+            self::URL . '/new',
             [],
             [],
             ['CONTENT_TYPE' => BaseTest::CONTENT_TYPE],
@@ -54,7 +55,7 @@ class UserTest extends WebTestCase
 
         $this->client->request(
             'GET',
-            "/api/user/$id",
+            self::URL . "/$id",
             [],
             [],
             ['CONTENT_TYPE' => BaseTest::CONTENT_TYPE],

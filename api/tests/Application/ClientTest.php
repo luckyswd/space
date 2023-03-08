@@ -24,7 +24,7 @@ class ClientTest extends WebTestCase
 
         $this->client->request(
             'GET',
-            "/api/client/$id",
+            BaseTest::CLIENT_URL . "/$id",
             [],
             [],
             ['CONTENT_TYPE' => BaseTest::CONTENT_TYPE],
@@ -37,7 +37,7 @@ class ClientTest extends WebTestCase
     {
         $this->client->request(
             'POST',
-            '/api/client/new',
+            BaseTest::CLIENT_URL . '/new',
             [],
             [],
             ['CONTENT_TYPE' => BaseTest::CONTENT_TYPE],
@@ -58,7 +58,7 @@ class ClientTest extends WebTestCase
     {
         $this->client->request(
             'GET',
-            '/api/clients/space/1',
+            BaseTest::CLIENT_URL . '/space/1',
             [],
             [],
             ['CONTENT_TYPE' => BaseTest::CONTENT_TYPE],
@@ -73,7 +73,7 @@ class ClientTest extends WebTestCase
 
         $this->client->request(
             'DELETE',
-            "/api/client/remove/$id",
+            BaseTest::CLIENT_URL . "/$id",
             [],
             [],
             ['CONTENT_TYPE' => BaseTest::CONTENT_TYPE],
@@ -88,7 +88,7 @@ class ClientTest extends WebTestCase
 
         $this->client->request(
             'PUT',
-            "/api/client/update/$id",
+            BaseTest::CLIENT_URL . "/$id",
             [],
             [],
             ['CONTENT_TYPE' => BaseTest::CONTENT_TYPE],

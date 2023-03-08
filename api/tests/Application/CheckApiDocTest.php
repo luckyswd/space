@@ -9,7 +9,7 @@ class CheckApiDocTest extends WebTestCase
     public function testSomething(): void
     {
         $client = static::createClient();
-        $client->request('GET',  'http://space.loc/api/doc');
+        $client->request('GET',  '/api/doc');
 
         $this->assertResponseIsSuccessful();
     }

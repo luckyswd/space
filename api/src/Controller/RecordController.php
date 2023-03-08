@@ -15,10 +15,23 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use OpenApi\Attributes as OA;
 
-#[Route('/api')]
+#[Route('/api/records')]
 class RecordController extends AbstractController
 {
-    #[Route('/record/new', methods: ['POST'])]
+    #[Route('', methods: ['GET'])]
+    #[OA\Tag(name: "Record")]
+    #[OA\Response(
+        response: 200,
+        description: 'Get all records',
+    )]
+    public function getAllRecords(
+        RecordRepository $recordRepository,
+    ): JsonResponse
+    {
+        return $this->json($recordRepository->findAll());
+    }
+
+    #[Route('/new', methods: ['POST'])]
     #[OA\Tag(name: "Record")]
     #[OA\Response(
         response: 200,
@@ -42,34 +55,21 @@ class RecordController extends AbstractController
         return $this->json($createRecordHandler());
     }
 
-    #[Route('/records', methods: ['GET'])]
-    #[OA\Tag(name: "Record")]
-    #[OA\Response(
-        response: 200,
-        description: 'Get all records',
-    )]
-    public function getAllRecords(
-        RecordRepository $recordRepository,
-    ): JsonResponse
-    {
-        return $this->json($recordRepository->findAll());
-    }
-
-    #[Route('/record/{id}', methods: ['GET'])]
+    #[Route('/{id}', methods: ['GET'])]
     #[OA\Tag(name: "Record")]
     #[OA\Response(
         response: 200,
         description: 'Get record by id',
     )]
     public function getRecordById(
-        Record $record,
+        Record           $record,
         RecordRepository $recordRepository,
     ): JsonResponse
     {
         return $this->json($recordRepository->findOneBy(['id' => $record]));
     }
 
-    #[Route('/records/client/{id}', methods: ['GET'])]
+    #[Route('/client/{id}', methods: ['GET'])]
     #[OA\Tag(name: "Record")]
     #[OA\Response(
         response: 200,
@@ -83,7 +83,7 @@ class RecordController extends AbstractController
         return $this->json($recordRepository->findBy(['client' => $client]));
     }
 
-    #[Route('/records/space/{id}', methods: ['GET'])]
+    #[Route('/space/{id}', methods: ['GET'])]
     #[OA\Tag(name: "Record")]
     #[OA\Response(
         response: 200,
@@ -97,7 +97,7 @@ class RecordController extends AbstractController
         return $this->json($recordRepository->getRecordsBySpace($space));
     }
 
-    #[Route('/record/remove/{id}', methods: ['DELETE'])]
+    #[Route('/{id}', methods: ['DELETE'])]
     #[OA\Tag(name: "Record")]
     #[OA\Response(
         response: 200,
@@ -111,7 +111,7 @@ class RecordController extends AbstractController
         return $this->json($removeRecordHandler($record));
     }
 
-    #[Route('/record/update/{id}', methods: ['PUT'])]
+    #[Route('/{id}', methods: ['PUT'])]
     #[OA\Tag(name: "Record")]
     #[OA\Response(
         response: 200,
@@ -128,7 +128,7 @@ class RecordController extends AbstractController
         )],
     )]
     public function update(
-        Record $record,
+        Record              $record,
         UpdateRecordHandler $recordHandler,
     ): JsonResponse
     {

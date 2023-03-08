@@ -27,7 +27,7 @@ class RecordTest extends WebTestCase
 
         $this->client->request(
             'POST',
-            '/api/record/new',
+            BaseTest::RECORDS_URL . '/new',
             [],
             [],
             ['CONTENT_TYPE' => BaseTest::CONTENT_TYPE],
@@ -46,7 +46,7 @@ class RecordTest extends WebTestCase
 
         $this->client->request(
             'GET',
-            "/api/records",
+            BaseTest::RECORDS_URL,
             [],
             [],
             ['CONTENT_TYPE' => BaseTest::CONTENT_TYPE],
@@ -62,7 +62,7 @@ class RecordTest extends WebTestCase
 
         $this->client->request(
             'GET',
-            "/api/record/$id",
+            BaseTest::RECORDS_URL . "/$id",
             [],
             [],
             ['CONTENT_TYPE' => BaseTest::CONTENT_TYPE],
@@ -78,7 +78,7 @@ class RecordTest extends WebTestCase
 
         $this->client->request(
             'GET',
-            "/api/records/client/$id",
+            BaseTest::RECORDS_URL . "/client/$id",
             [],
             [],
             ['CONTENT_TYPE' => BaseTest::CONTENT_TYPE],
@@ -92,7 +92,7 @@ class RecordTest extends WebTestCase
 
         $this->client->request(
             'GET',
-            "/api/records/space/1",
+            BaseTest::RECORDS_URL . "/space/1",
             [],
             [],
             ['CONTENT_TYPE' => BaseTest::CONTENT_TYPE],
@@ -107,7 +107,7 @@ class RecordTest extends WebTestCase
 
         $this->client->request(
             'DELETE',
-            "/api/record/remove/$id",
+            BaseTest::RECORDS_URL . "/$id",
             [],
             [],
             ['CONTENT_TYPE' => BaseTest::CONTENT_TYPE],
@@ -122,7 +122,7 @@ class RecordTest extends WebTestCase
 
         $this->client->request(
             'PUT',
-            "/api/record/update/$id",
+            BaseTest::RECORDS_URL . "/$id",
             [],
             [],
             ['CONTENT_TYPE' => BaseTest::CONTENT_TYPE],
