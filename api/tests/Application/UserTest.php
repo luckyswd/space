@@ -50,6 +50,7 @@ class UserTest extends WebTestCase
     {
         $userRepository = $this->client->getContainer()->get(UserRepository::class);
         $users = $userRepository->findAll();
+        shuffle($users);
         $id = $users ? $users[0]->getId() : 1;
 
         $this->client->request(

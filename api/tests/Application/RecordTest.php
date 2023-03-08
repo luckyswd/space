@@ -140,6 +140,7 @@ class RecordTest extends WebTestCase
         $clients = $this->clientRepository->findAll();
 
         if ($clients) {
+            shuffle($clients);
             return $clients[0]->getId();
         }
 
@@ -148,10 +149,11 @@ class RecordTest extends WebTestCase
 
     private function getRecordId(): int
     {
-        $record = $this->recordRepository->findAll();
+        $records = $this->recordRepository->findAll();
 
-        if ($record) {
-            return $record[0]->getId();
+        if ($records) {
+            shuffle($records);
+            return $records[0]->getId();
         }
 
         return 1;

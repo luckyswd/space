@@ -109,6 +109,7 @@ class ClientTest extends WebTestCase
         $clients = $this->clientRepository->findAll();
 
         if ($clients) {
+            shuffle($clients);
             return $clients[0]->getId();
         }
 

@@ -33,6 +33,7 @@ class SpaceTest extends WebTestCase
     {
         $spaceRepository = $this->client->getContainer()->get(SpaceRepository::class);
         $spaces = $spaceRepository->findAll();
+        shuffle($spaces);
         $id = $spaces ? $spaces[0]->getId() : 1;
 
         $this->client->request(
