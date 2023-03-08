@@ -2,11 +2,11 @@
 
 namespace App\tests\Application;
 
-use App\Repository\UserRepository;
+use App\Repository\SpaceRepository;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class UserTest extends WebTestCase
+class SpaceTest extends WebTestCase
 {
     private KernelBrowser $client;
 
@@ -16,11 +16,11 @@ class UserTest extends WebTestCase
         BaseTest::setBearer($this->client);
     }
 
-    public function testGetUsers()
+    public function testGetSpaces()
     {
         $this->client->request(
             'GET',
-            BaseTest::USER_URL,
+            BaseTest::SPACE_URL,
             [],
             [],
             ['CONTENT_TYPE' => BaseTest::CONTENT_TYPE],
@@ -29,39 +29,31 @@ class UserTest extends WebTestCase
         $this->assertResponseIsSuccessful();
     }
 
-    public function testNewUser()
+    public function testGetSpaceById()
     {
+        $spaceRepository = $this->client->getContainer()->get(SpaceRepository::class);
+        $spaces = $spaceRepository->findAll();
+        $id = $spaces ? $spaces[0]->getId() : 1;
+
         $this->client->request(
-            'POST',
-            BaseTest::USER_URL . '/new',
+            'GET',
+            BaseTest::SPACE_URL . "/$id",
             [],
             [],
             ['CONTENT_TYPE' => BaseTest::CONTENT_TYPE],
-            json_encode([
-                'email' => BaseTest::getRandomEmail(),
-                'password' => BaseTest::getRandomText(),
-            ])
         );
 
         $this->assertResponseIsSuccessful();
     }
 
-    public function testGetUserById()
+    public function testGetAuthorizedSpace()
     {
-        $userRepository = $this->client->getContainer()->get(UserRepository::class);
-        $users = $userRepository->findAll();
-        $id = $users ? $users[0]->getId() : 1;
-
         $this->client->request(
             'GET',
-            BaseTest::USER_URL . "/$id",
+            BaseTest::SPACE_URL . '/authorized/space',
             [],
             [],
             ['CONTENT_TYPE' => BaseTest::CONTENT_TYPE],
-            json_encode([
-                'email' => BaseTest::getRandomEmail(),
-                'password' => BaseTest::getRandomText(),
-            ])
         );
 
         $this->assertResponseIsSuccessful();

@@ -10,7 +10,8 @@ class BaseTest
     const CONTENT_TYPE = 'application/json';
     const USER_URL = '/api/users';
     const CLIENT_URL = '/api/clients';
-    const RECORDS_URL = '/api/records';
+    const RECORD_URL = '/api/records';
+    const SPACE_URL = '/api/spaces';
 
     public static function setBearer(
         KernelBrowser $client,
